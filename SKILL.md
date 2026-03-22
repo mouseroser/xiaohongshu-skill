@@ -1,9 +1,9 @@
 ---
-name: creator-ops
-description: "全平台创作者运营自动化（小红书首发，X/抖音/TikTok 陆续接入）。CDP 脚本自动化发布/搜索/数据/评论 + 运营 SOP + NLM 知识引擎集成。"
+name: media-tools
+description: "自媒体执行工具集（小红书首发，X/抖音/TikTok 陆续接入）。CDP 脚本自动化发布/搜索/数据/评论 + 运营 SOP + NLM 知识引擎集成。"
 ---
 
-# creator-ops：全平台创作者运营 Skill
+# media-tools：全平台创作者运营 Skill
 
 > 当前激活：小红书
 > 规划接入：X、抖音、TikTok
@@ -14,9 +14,9 @@ description: "全平台创作者运营自动化（小红书首发，X/抖音/Tik
 
 ## 职责边界
 
-**creator-ops = 自媒体执行（工具层），wemedia = 自媒体运营（策略层）**
+**media-tools = 自媒体执行（工具层），wemedia = 自媒体运营（策略层）**
 
-| 归 creator-ops（自媒体执行） | 归 wemedia（自媒体运营） |
+| 归 media-tools（自媒体执行） | 归 wemedia（自媒体运营） |
 |---------------|-----------|
 | CDP 脚本执行（publish_pipeline / cdp_publish）| 选题发现与评估 |
 | 竞品数据采集（search-feeds）| 内容队列维护（HOT/EVERGREEN/SERIES）|
@@ -26,7 +26,7 @@ description: "全平台创作者运营自动化（小红书首发，X/抖音/Tik
 | NLM 知识采集管道（media-research notebook）| 配图生成指令 |
 | 平台规则驱动 | 平台内容适配（格式/结构）|
 
-**main 的角色**：编排中心，不直接执行 CDP 脚本。main 从 wemedia 获取内容 + 执行指令，调用 creator-ops 完成发布。
+**main 的角色**：编排中心，不直接执行 CDP 脚本。main 从 wemedia 获取内容 + 执行指令，调用 media-tools 完成发布。
 
 **禁止**：wemedia agent 不得直接调用 `python3 scripts/publish_pipeline.py`（那是 main 的职责）。
 
@@ -42,7 +42,7 @@ description: "全平台创作者运营自动化（小红书首发，X/抖音/Tik
 
 ## 环境
 
-- **Python 脚本目录**：`~/.openclaw/skills/creator-ops/scripts/`
+- **Python 脚本目录**：`~/.openclaw/skills/media-tools/scripts/`
 - **CDP 端口**：`9223`（与 OpenClaw 浏览器 18800 不冲突）
 - **Chrome Profile**：`~/Library/Application Support/XiaohongshuProfiles/`
 - **临时文件**：`/tmp/xhs_publish/`
@@ -52,12 +52,12 @@ description: "全平台创作者运营自动化（小红书首发，X/抖音/Tik
 
 | 用途 | 路径 | 写入者 | 读者 |
 |------|------|--------|------|
-| 内容草稿 | `~/.openclaw/workspace/agents/wemedia/drafts/{A\|B\|C}/{标识}.txt` | wemedia agent | main / creator-ops |
-| 配图 | `~/.openclaw/workspace/agents/wemedia/drafts/generated/{A\|B\|C}/{标识}_sq.jpg` | main / nano-banana | main / creator-ops |
-| 发布命令 | `cd ~/.openclaw/skills/creator-ops && python3 scripts/publish_pipeline.py ...` | main 调用 | main 执行 |
-| 竞品数据 | `/tmp/xhs_publish/search_{keyword}_{timestamp}.json` | creator-ops | main 分析 |
+| 内容草稿 | `~/.openclaw/workspace/agents/wemedia/drafts/{A\|B\|C}/{标识}.txt` | wemedia agent | main / media-tools |
+| 配图 | `~/.openclaw/workspace/agents/wemedia/drafts/generated/{A\|B\|C}/{标识}_sq.jpg` | main / nano-banana | main / media-tools |
+| 发布命令 | `cd ~/.openclaw/skills/media-tools && python3 scripts/publish_pipeline.py ...` | main 调用 | main 执行 |
+| 竞品数据 | `/tmp/xhs_publish/search_{keyword}_{timestamp}.json` | media-tools | main 分析 |
 
-> **main 是唯一读 wemedia 草稿的人**，creator-ops 不直接读草稿（由 main 传递参数）。
+> **main 是唯一读 wemedia 草稿的人**，media-tools 不直接读草稿（由 main 传递参数）。
 
 ## Hard Rules
 
@@ -75,7 +75,7 @@ description: "全平台创作者运营自动化（小红书首发，X/抖音/Tik
 
 ### 发布
 ```bash
-cd ~/.openclaw/skills/creator-ops
+cd ~/.openclaw/skills/media-tools
 python3 scripts/publish_pipeline.py \
   --title "标题" --content "正文" \
   --image-urls "https://..." "https://..." \
@@ -87,7 +87,7 @@ python3 scripts/publish_pipeline.py \
 
 ### 搜索竞品
 ```bash
-cd ~/.openclaw/skills/creator-ops
+cd ~/.openclaw/skills/media-tools
 python3 scripts/cdp_publish.py --headless search-feeds --keyword "关键词"
 ```
 > 注意：`--headless` 是全局参数，必须放在子命令前面。
@@ -96,7 +96,7 @@ python3 scripts/cdp_publish.py --headless search-feeds --keyword "关键词"
 
 ### 笔记详情 + 评论
 ```bash
-cd ~/.openclaw/skills/creator-ops
+cd ~/.openclaw/skills/media-tools
 python3 scripts/cdp_publish.py --headless get-feed-detail \
   --feed-id <id> --xsec-token <token> \
   --load-all-comments --limit 20
@@ -104,19 +104,19 @@ python3 scripts/cdp_publish.py --headless get-feed-detail \
 
 ### 数据看板
 ```bash
-cd ~/.openclaw/skills/creator-ops
+cd ~/.openclaw/skills/media-tools
 python3 scripts/cdp_publish.py --headless content-data --csv-file /tmp/xhs_data.csv
 ```
 
 ### 评论检查
 ```bash
-cd ~/.openclaw/skills/creator-ops
+cd ~/.openclaw/skills/media-tools
 python3 scripts/cdp_publish.py --headless get-notification-mentions
 ```
 
 ### 评论回复
 ```bash
-cd ~/.openclaw/skills/creator-ops
+cd ~/.openclaw/skills/media-tools
 python3 scripts/cdp_publish.py --headless respond-comment \
   --feed-id <id> --xsec-token <token> \
   --content "回复内容" --comment-author "用户名"
@@ -136,7 +136,7 @@ python3 scripts/cdp_publish.py --headless respond-comment \
 # 步骤 2: 晨星扫码登录创作者中心 + 主站（两个域需要分别登录）
 
 # 检查登录状态
-cd ~/.openclaw/skills/creator-ops
+cd ~/.openclaw/skills/media-tools
 python3 scripts/cdp_publish.py check-login
 
 # 获取登录二维码（远程场景）
@@ -147,7 +147,7 @@ python3 scripts/cdp_publish.py get-login-qrcode
 
 ### 首页推荐
 ```bash
-cd ~/.openclaw/skills/creator-ops
+cd ~/.openclaw/skills/media-tools
 python3 scripts/cdp_publish.py list-feeds --headless
 ```
 
@@ -170,7 +170,7 @@ python3 scripts/cdp_publish.py list-feeds --headless
 | 技术博客 | `web_fetch` | 热点触发 | ✅ |
 | 自家数据 | `content-data` 脚本 | 每日 | ✅ |
 
-> **media-research notebook 是共享资源**：由 creator-ops 维护，wemedia 在 Step 2 创作前置链中调用查询。creator-ops 负责采集和写入，wemedia 负责查询和消费。
+> **media-research notebook 是共享资源**：由 media-tools 维护，wemedia 在 Step 2 创作前置链中调用查询。media-tools 负责采集和写入，wemedia 负责查询和消费。
 
 ### 采集 → NLM 流程
 
@@ -206,7 +206,7 @@ bash ~/.openclaw/skills/notebooklm/scripts/nlm-gateway.sh query \
   --query "过去 2 周哪类内容互动最高？下一步应加注什么方向？"
 ```
 
-> **S 级快速路径**：时效优先，S 级跳过 NLM 查询。creator-ops 可在晨间扫描时预生成一份 `intel/media-ops/DAILY-KNOWLEDGE-BRIEF.md`，wemedia 直接读文件获取当日热点背景。
+> **S 级快速路径**：时效优先，S 级跳过 NLM 查询。media-tools 可在晨间扫描时预生成一份 `intel/media-ops/DAILY-KNOWLEDGE-BRIEF.md`，wemedia 直接读文件获取当日热点背景。
 
 ## 与自媒体流水线 v1.1 的集成
 
@@ -223,21 +223,21 @@ bash ~/.openclaw/skills/notebooklm/scripts/nlm-gateway.sh query \
 
 ## 与 wemedia Skill 的联动关系
 
-**本质**：creator-ops = 自媒体执行（工具层），wemedia = 自媒体运营（策略层）。
+**本质**：media-tools = 自媒体执行（工具层），wemedia = 自媒体运营（策略层）。
 
-**creator-ops 提供的共享资源**：
+**media-tools 提供的共享资源**：
 - `media-research` notebook（NLM 知识库，wemedia Step 2 查询用）
 - `publish_pipeline.py`（main 调用，wemedia 不得直接调用）
 - 竞品数据文件（main 分析后传递结论给 wemedia）
 - 配图生成能力（由 main/nano-banana 执行，wemedia 只输出指令）
 
-**creator-ops 从 wemedia 接收**：
+**media-tools 从 wemedia 接收**：
 - 标准交付物（`drafts/{A|B|C}/{标识}.txt`，含标题/正文/标签/配图路径）
-- 发布指令（main 转发，creator-ops 执行）
+- 发布指令（main 转发，media-tools 执行）
 
 **main 的调度职责**：
 ```
-wemedia 交付 → main 读取 → creator-ops 执行 → 监控群通知
+wemedia 交付 → main 读取 → media-tools 执行 → 监控群通知
 ```
 
 **禁止**：wemedia agent 直接调用 `publish_pipeline.py`。所有发布必须经 main 调度。
