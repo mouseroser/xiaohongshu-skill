@@ -226,10 +226,14 @@ bash ~/.openclaw/skills/notebooklm/scripts/nlm-gateway.sh query \
 **本质**：media-tools = 自媒体执行（工具层），wemedia = 自媒体运营（策略层）。
 
 **media-tools 提供的共享资源**：
-- `media-research` notebook（NLM 知识库，wemedia Step 2 查询用）
+- `media-research` notebook（NLM 知识库，wemedia Step 2 查询用；**禁止用于生图**）
 - `publish_pipeline.py`（wemedia subagent 调用，main 仅负责监控和兜底）
 - 竞品数据文件（main 分析后传递结论给 wemedia）
-- 配图生成能力（由 main 调用 NotebookLM 执行，wemedia 输出配图提示词）
+- 配图生成能力（由 main 调用 NotebookLM 执行，**必须使用临时 notebook**）
+
+**NotebookLM infographic 生图规范**：
+- `media-research` notebook 承担知识积累职责，**禁止直接用于生图**（历史 source 会干扰）
+- 生图标准流程：创建临时 notebook → 加入单一干净 source → 生成 → 下载 → 删除临时 notebook
 
 **media-tools 从 wemedia 接收**：
 - 标准交付物（`drafts/{A|B|C}/{标识}.txt`，含标题/正文/标签/配图路径）
