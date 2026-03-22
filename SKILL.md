@@ -206,7 +206,7 @@ bash ~/.openclaw/skills/notebooklm/scripts/nlm-gateway.sh query \
   --query "过去 2 周哪类内容互动最高？下一步应加注什么方向？"
 ```
 
-> **S 级快速路径**：时效优先，S 级跳过 NLM 查询。media-tools 可在晨间扫描时预生成一份 `intel/media-ops/DAILY-KNOWLEDGE-BRIEF.md`，wemedia 直接读文件获取当日热点背景。
+> **S 级快速路径**：时效优先，S 级跳过 NLM 查询。media-tools 可在晨间扫描时预生成一份 `intel/media-tools/DAILY-KNOWLEDGE-BRIEF.md`，wemedia 直接读文件获取当日热点背景。
 
 ## 与自媒体流水线 v1.1 的集成
 
