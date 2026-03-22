@@ -9,14 +9,14 @@ description: "全平台创作者运营自动化（小红书首发，X/抖音/Tik
 > 规划接入：X、抖音、TikTok
 
 融合两套能力：
-- **执行层**：Python CDP 脚本（发布、搜索、数据看板、评论、多账号）
-- **策略层**：运营 SOP + 风控 + 爆款复刻流程
+- **自媒体执行（工具层）**：Python CDP 脚本（发布、搜索、数据看板、评论、多账号）
+- **运营 SOP** + 风控 + 爆款复刻流程
 
 ## 职责边界
 
-**creator-ops = 执行层（How），wemedia = 编排层（What/When/Why）**
+**creator-ops = 自媒体执行（工具层），wemedia = 自媒体运营（策略层）**
 
-| 归 creator-ops | 归 wemedia |
+| 归 creator-ops（自媒体执行） | 归 wemedia（自媒体运营） |
 |---------------|-----------|
 | CDP 脚本执行（publish_pipeline / cdp_publish）| 选题发现与评估 |
 | 竞品数据采集（search-feeds）| 内容队列维护（HOT/EVERGREEN/SERIES）|
@@ -223,7 +223,7 @@ bash ~/.openclaw/skills/notebooklm/scripts/nlm-gateway.sh query \
 
 ## 与 wemedia Skill 的联动关系
 
-**本质**：creator-ops = 执行层（How），wemedia = 编排层（What/When/Why）。
+**本质**：creator-ops = 自媒体执行（工具层），wemedia = 自媒体运营（策略层）。
 
 **creator-ops 提供的共享资源**：
 - `media-research` notebook（NLM 知识库，wemedia Step 2 查询用）

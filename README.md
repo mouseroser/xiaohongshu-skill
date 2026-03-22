@@ -7,16 +7,16 @@
 
 ## 定位
 
-**执行层（How）**：提供 CDP 自动化脚本 + 运营 SOP + NLM 知识引擎集成。
+**自媒体执行（工具层）**：提供 CDP 自动化脚本 + 运营 SOP + NLM 知识引擎集成。
 
-与 [wemedia](https://github.com/mouseroser/wemedia-skill)（编排层）配合使用：
+与 [wemedia](https://github.com/mouseroser/wemedia-skill)（自媒体运营）配合使用：
 
 ```
-wemedia（决定发什么、什么时候发）
+wemedia（自媒体运营：决定发什么、什么时候发）
     ↓
 main（编排调度）
     ↓
-creator-ops（执行发布、数据采集、知识管道）
+creator-ops（自媒体执行：发布、数据采集、知识管道）
 ```
 
 ## 能力
@@ -104,7 +104,7 @@ creator-ops/
 
 ## 与 wemedia 的关系
 
-| creator-ops（执行层） | wemedia（编排层） |
+| creator-ops（自媒体执行） | wemedia](https://github.com/mouseroser/wemedia-skill)（自媒体运营） |
 |----------------------|------------------|
 | CDP 脚本执行 | 选题发现与评估 |
 | 竞品数据采集 | 内容队列维护 |
