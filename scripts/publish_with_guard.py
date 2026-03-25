@@ -171,7 +171,7 @@ def verify_publish(data):
     title_found = False
     matched_rows = []
     for row in rows:
-        row_title = str(row.get('title') or '')
+        row_title = str(row.get('标题') or row.get('title') or '')
         if title and title in row_title:
             title_found = True
             matched_rows.append(row)
